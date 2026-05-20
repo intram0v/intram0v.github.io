@@ -1,0 +1,768 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    html, body {
+  overflow: hidden;
+  height: 100%;
+}
+
+
+
+    /* Контейнер с увеличенными узкими карточками */
+    .container {
+      display: grid;
+      grid-template-columns: minmax(250px, 350px) 1px minmax(250px, 350px);
+      gap: 40px;
+      justify-content: center;
+      z-index: 1;
+      margin-top: 250px;
+    }
+
+    /* Тонкая разделительная линия с анимацией появления */
+    .divider {
+      background: linear-gradient(180deg, rgba(209,23,43,0) 0%, #d1172b 50%, rgba(209,23,43,0) 100%);
+      width: 2px;
+      height: 80%;
+      align-self: center;
+      opacity: 0;
+      animation: fadeInDivider 1s forwards;
+    }
+
+    @keyframes fadeInDivider {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Карточка программы с увеличенными размерами и анимацией появления */
+    .program-card {
+      background: #121518;
+      border-radius: 20px;
+      padding: 40px;
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: fadeInUp 0.8s forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .program-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    /* Эффект radial-градиента при наведении */
+    .program-card::after {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(209,23,43,0.15) 0%, transparent 70%);
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .program-card:hover::after {
+      opacity: 1;
+    }
+
+    /* Изображение программы – круг с заполнением и обрезкой содержимого */
+    .program-image {
+      width: 120px;
+      height: 120px;
+      background: rgba(209,23,43,0.1);
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(209,23,43,0.3);
+      transition: transform 0.3s ease;
+      overflow: hidden; /* Обрезает содержимое по границе круга */
+    }
+
+    .program-image:hover {
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .program-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Заполняет весь круг с обрезкой лишнего */
+      filter: drop-shadow(0 4px 8px rgba(209,23,43,0.2));
+    }
+
+    .program-content {
+      text-align: center;
+    }
+
+    h2 {
+      color: #fff;
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    p {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.4;
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* Кнопки с эффектом ripple */
+    .btn {
+      padding: 15px 30px;
+      border-radius: 20px;
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+      transition: transform 0.6s, opacity 0.6s;
+    }
+
+    .btn:active::after {
+      transform: translate(-50%, -50%) scale(20);
+      opacity: 0;
+    }
+
+    .btn-primary {
+      background: #d1172b;
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(209,23,43,0.3);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #d1172b;
+      border: 2px solid rgba(209,23,43,0.3);
+    }
+
+    .btn-primary:hover {
+      background: #b31425;
+      box-shadow: 0 6px 20px rgba(209,23,43,0.4);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(209,23,43,0.1);
+      border-color: #d1172b;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .divider {
+        display: none;
+      }
+    }
+    .navbar {
+            position: absolute;
+            top: 0;
+            width: 90%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-radius: 20px;
+            margin-left: 5%;
+            margin-right: 10%;
+            animation: slideDown 1s ease-out;
+        }
+        .navbar .title {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-left: 50px;
+
+    padding-top: 10px;
+}
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #1b1f24;
+        }
+    .navbar .left-section {
+      display: flex;
+      align-items: center;
+    }
+    /* Левая секция навбара: логотип и выбор языка */
+    .navbar .left-section {
+      display: flex;
+      align-items: center;
+    }
+    /* Логотип Vrime */
+    .navbar .title {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+    }
+    /* Блок выбора языка */
+    .language-selector {
+      position: relative;
+      display: inline-block;
+      margin-left: 15px; /* Отступ 10px от логотипа */
+    }
+    .lang-btn {
+      background: #121518;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .lang-btn:hover {
+      background: #1b1f24;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .lang-btn img.flag {
+      width: 24px;
+      height: auto;
+      margin-right: 8px;
+      border-radius: 1px;
+    }
+    /* Выпадающее меню, изначально скрытое */
+    .lang-options {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      background: #1b1f24;
+      border-radius: 5px;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      z-index: 1001;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    /* Когда добавлен класс open, меню становится видимым */
+    .language-selector.open .lang-options {
+      opacity: 1;
+      visibility: visible;
+    }
+    .lang-options a {
+      display: flex;
+      align-items: center;
+      padding: 5px 8px;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .lang-options a:hover {
+      background: #444;
+    }
+    .lang-options a img.flag {
+      width: 24px;
+      height: auto;
+      margin-right: 8px;
+      border-radius: 2px;
+    }
+    /* Правая секция: меню навигации */
+    .navbar .menu {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+    .navbar .menu a {
+      margin-left: 10px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: background 0.3s;
+      color: #fff;
+    }
+    .navbar .menu a:hover {
+      background-color: #1b1f24;
+    }
+
+  height: 100%;
+  background: url('background2.jpg') no-repeat center center/cover;
+  /* filter: blur(5px) brightness(50%); */
+  z-index: -1;
+  /* animation: backgroundAnimation 10s infinite linear; */
+  transition: transform 0.1s ease-out;
+}
+.title {
+            font-size: 3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .title:hover {
+            transform: scale(1.1);
+        }
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+   filter: blur(5px) brightness(50%);
+
+  height: 100%;
+  background: url('background2.jpg') no-repeat center center/cover;
+  /* filter: blur(5px) brightness(50%); */
+  z-index: -1;
+  /* animation: backgroundAnimation 10s infinite linear; */
+  transition: transform 0.1s ease-out;
+}
+      .title {
+            font-size: 3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .title:hover {
+            transform: scale(1.1);
+        }
+        p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+    }
+    .buttons a {
+      display: inline-block;
+      padding: 15px 30px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      margin: 5px;
+      transition: background 0.3s ease;
+    }
+    .btn-primary {
+      background: #d1172b;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #b31425;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: #d1172b;
+      border: 2px solid rgba(209,23,43,0.3);
+    }
+    .btn-secondary:hover {
+      background: rgba(209,23,43,0.1);
+    }
+    .divider {
+      width: 1px;
+      background: linear-gradient(180deg, rgba(209,23,43,0) 0%, #d1172b 50%, rgba(209,23,43,0) 100%);
+      height: 80%;
+      align-self: center;
+    }
+
+     /* Стили для модального окна ошибки */
+        .modal-error {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-10%, -10%) scale(0.8);
+            background: #df172d;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            font-weight: 600;
+            font-size: 1.2rem;
+            animation: none;
+            pointer-events: none;
+        }
+
+        /* Анимация модального окна */
+        @keyframes showError {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+  </style>
+<script>
+  let timeout;
+  let autoMove = false;
+  let currentX = 0, currentY = 0;
+  let targetX = 0, targetY = 0;
+  const scale = 1.1; // уменьшили масштаб для менее сильного приближения
+  const speed = 0.05; // Коэффициент плавности движения
+
+  // Функция для расчёта максимальных смещений по X и Y
+  function updateBounds(background) {
+    const maxX = (background.offsetWidth * scale - window.innerWidth) / 2;
+    const maxY = (background.offsetHeight * scale - window.innerHeight) / 2;
+    return { maxX, maxY };
+  }
+
+  // Функция для ограничения значения в заданном диапазоне
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    const background = document.querySelector('.background');
+    if (!background) return;
+
+    const { maxX, maxY } = updateBounds(background);
+
+    // Расчёт смещения с эффектом параллакса:
+    // Когда курсор слева — фон смещается вправо (и наоборот)
+    const newX = -maxX * ((e.clientX / window.innerWidth) - 0.5) * 2;
+    const newY = -maxY * ((e.clientY / window.innerHeight) - 0.5) * 2;
+
+    // Обновляем текущие и целевые позиции
+    currentX = clamp(newX, -maxX, maxX);
+    currentY = clamp(newY, -maxY, maxY);
+    targetX = currentX;
+    targetY = currentY;
+
+    background.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+
+    // Если мышь двигается, отменяем авто-анимацию
+    autoMove = false;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      autoMove = true;
+      setRandomTarget(background);
+      animateBackground(background);
+    }, 500);
+  });
+
+  // Устанавливаем случайную целевую позицию в пределах допустимых границ
+  function setRandomTarget(background) {
+    const { maxX, maxY } = updateBounds(background);
+    targetX = clamp(currentX + (Math.random() - 0.5) * 100, -maxX, maxX);
+    targetY = clamp(currentY + (Math.random() - 0.5) * 100, -maxY, maxY);
+  }
+
+  // Анимация плавного перехода к целевой точке
+  function animateBackground(background) {
+    if (!autoMove) return;
+    const { maxX, maxY } = updateBounds(background);
+
+    currentX += (targetX - currentX) * speed;
+    currentY += (targetY - currentY) * speed;
+
+    // Ограничиваем смещение, чтобы фон не выходил за границы
+    currentX = clamp(currentX, -maxX, maxX);
+    currentY = clamp(currentY, -maxY, maxY);
+
+    background.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+
+    // Если почти достигли цели – выбираем новую случайную позицию
+    if (Math.abs(currentX - targetX) < 1 && Math.abs(currentY - targetY) < 1) {
+      setRandomTarget(background);
+    }
+
+    requestAnimationFrame(() => animateBackground(background));
+  }
+
+</script>
+</head>
+<body>
+<div class="background"></div>
+    <div class="navbar">
+        <!-- Левая секция: логотип и выбор языка -->
+        <div class="left-section">
+            <div class="title" onclick="window.location.href='index.html'">Vrime</div>
+            <div class="language-selector">
+                <button class="lang-btn" id="lang-btn">
+                    <img src="ru.png" alt="RU" class="flag" id="current-flag">
+                    <span id="current-lang-text">Русский</span>
+                </button>
+                <div class="lang-options">
+                    <a href="?lang=ru" data-lang="ru" data-text="Русский" data-flag="ru.png" onclick="changeLanguage(event)">
+                        <img src="ru.png" alt="RU" class="flag">
+                        Русский
+                    </a>
+                    <a href="?lang=uk" data-lang="uk" data-text="Українська" data-flag="uk.png" onclick="changeLanguage(event)">
+                        <img src="uk.png" alt="UA" class="flag">
+                        Українська
+                    </a>
+                    <a href="?lang=en" data-lang="en" data-text="English" data-flag="en.png" onclick="changeLanguage(event)">
+                        <img src="en.png" alt="EN" class="flag">
+                        English
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая секция: меню навигации -->
+        <div class="menu">
+            <a href="buy.html"><i class="fa-solid fa-bag-shopping mr-2"> </i> <span data-i18n="buy">  Buy</span></a>
+  <a href="dashboard.html"><i class="fa-solid fa-user"></i> <span data-i18n="account">Account</span></a>
+  <a href="index.html#features"><i class="fa-solid fa-building"></i> <span data-i18n="about">About</span></a>
+
+  <a href="support.html"><i class="fa-solid fa-headset"></i> <span class="no-translate"></span> <span data-i18n="support">Поддержка</span></a>
+        </div>
+    </div>
+
+    <div class="container">
+    <div class="program-card">
+      <div class="program-image">
+        <!-- Изображение будет обрезано по форме круга -->
+        <img src="schenshot4.jpg" alt="RustMe">
+      </div>
+
+
+
+
+      <div class="program-content">
+        <h2>RustMe</h2>
+        <p>Vrime-client Rustme - скачать лоадер для игры "RustMe". Выберите версию для загрузки!</p>
+        <div class="buttons">
+                <button class="btn btn-primary" onclick="downloadProgram('rustme')">Графический лоадер Beta 2.0</button>
+                <button class="btn btn-secondary" onclick="downloadProgram('rustme')">Консольный лоадер 2.0</button>
+            </div>
+            <div id="error-rustme" class="error-message"></div>
+        </div>
+    </div>
+
+
+    <div class="divider"></div>
+
+    <div class="program-card">
+      <div class="program-image">
+        <!-- Изображение будет обрезано по форме круга -->
+        <img src="img2.jpeg" alt="CS2">
+      </div>
+
+
+      <div class="program-content">
+        <h2>CS2</h2>
+        <p>Vrime-client CS2 - скачать лоадер для игры "CS2". Выберите версию для загрузки!</p>
+        <div class="buttons">
+                <button class="btn btn-primary" onclick="downloadProgram('cs2')">Графический лоадер Beta 2.0</button>
+                <button class="btn btn-secondary" onclick="downloadProgram('cs2')">Консольный лоадер 2.0</button>
+            </div>
+
+            <div id="error-cs2" class="error-message"></div>
+    </div>
+  </div>
+  <!-- Модальное окно ошибки -->
+    <div id="modal-error" class="modal-error"></div>
+
+    <script>
+        function downloadProgram(program) {
+            const errorModal = document.getElementById('modal-error');
+
+            // Сначала полностью скрываем окно ошибки
+            errorModal.style.display = 'none';
+            errorModal.style.animation = 'none';
+
+            // Показываем окно только если есть ошибка
+            setTimeout(() => {
+                errorModal.textContent = 'Ошибка: Лицензия отсутствует или истекла!';
+                errorModal.style.display = 'block';
+                errorModal.style.animation = 'showError 2s ease forwards';
+
+                // Автоматическое скрытие модального окна через 1 секунду
+                setTimeout(() => {
+                    errorModal.style.display = 'none';
+                }, 2000);
+            }, 100);
+        }
+    </script>
+
+<script>
+// Find the language selector element
+const langSelector = document.querySelector('.language-selector');
+let closeTimeout;
+
+// Open the menu when mouse enters
+langSelector.addEventListener('mouseenter', () => {
+    clearTimeout(closeTimeout);
+    langSelector.classList.add('open');
+});
+
+// Close the menu after 1.5 seconds when mouse leaves
+langSelector.addEventListener('mouseleave', () => {
+    closeTimeout = setTimeout(() => {
+        langSelector.classList.remove('open');
+    }, 200);
+});
+
+// Handlers for changing the language
+document.querySelectorAll(".lang-options a").forEach(link => {
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const lang = e.target.closest("a").getAttribute("data-lang");
+        setLanguage(lang);  // Immediately apply the language
+    });
+});
+
+// Translations
+const translations = {
+    'ru': {
+        'buy': 'Купить',
+        'account': 'Аккаунт',
+        'about': 'О нас',
+        'support': 'Поддержка',
+
+    },
+    'uk': {
+        'buy': 'Купити',
+
+        'account': 'Аккаунт',
+        'about': 'Про нас',
+        'support': 'Підтримка',
+        'login': 'Вхід',
+
+    },
+    'en': {
+        'buy': 'Buy',
+        'account': 'Account',
+        'about': 'About',
+        'support': 'Support',
+
+    }
+};
+
+// Language change function
+function setLanguage(lang) {
+    localStorage.setItem("language", lang); // Save language in localStorage
+
+    // Change the flag and text
+    const flag = lang === 'ru' ? 'ru.png' : lang === 'en' ? 'uk.png' : 'en.png';
+    const langText = lang === 'ru' ? "Русский" : lang === 'en' ? "English" : "Українська";
+    document.querySelector("#current-flag").src = flag;
+    document.querySelector("#current-lang-text").textContent = langText;
+
+    // Apply translations
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = translations[lang][key];
+        if (el.placeholder) {
+            el.placeholder = translations[lang][key + '-placeholder'] || el.placeholder;
+        }
+    });
+}
+
+// Get selected language from localStorage and apply it
+const storedLanguage = localStorage.getItem("language") || "ru";
+setLanguage(storedLanguage);
+</script>
+
+
+
+
+
+
+
+    <script>
+        function switchForm(form) {
+    document.getElementById('login-form').classList.remove('active');
+    document.getElementById('register-form').classList.remove('active');
+    document.getElementById('login-btn').classList.remove('active');
+    document.getElementById('register-btn').classList.remove('active');
+
+    let formTitle = document.getElementById('form-title');
+    let formSubtitle = document.getElementById('form-subtitle');
+
+    if (form === 'login') {
+        document.getElementById('login-form').classList.add('active');
+        document.getElementById('login-btn').classList.add('active');
+
+        formTitle.textContent = "Войдите";
+
+    } else {
+        document.getElementById('register-form').classList.add('active');
+        document.getElementById('register-btn').classList.add('active');
+        formTitle.textContent = "Зарегистрируйтесь";
+
+    }
+}
+
+
+
+
+        fetch('https://api64.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.querySelectorAll('input[name="ip_address"]').forEach(input => input.value = data.ip);
+            });
+    </script>
+</body>
+</html>

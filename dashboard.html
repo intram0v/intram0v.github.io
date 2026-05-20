@@ -1,0 +1,1046 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, minimum-scale=0.9">
+    <title>Личный кабинет</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1e1e1e;
+            background-size: 400% 400%;
+            color: #fff;
+            overflow: hidden;
+
+        }
+        html {
+  font-size: 80%;
+}
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            width: 90%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-radius: 20px;
+            margin-left: 5%;
+            margin-right: 10%;
+            animation: slideDown 1s ease-out;
+        }
+        .navbar .title {
+    font-size: 1.7em;
+    font-weight: 600;
+    margin-left: 50px;
+
+    padding-top: 10px;  /* Добавил отступ сверху, чтобы переместить текст вниз */
+}
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background-color: #1b1f24;;
+        }
+
+        .navbar a:hover {
+            background-color: #1b1f24;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+       /* Контейнер таблицы */
+/* Контейнер таблицы */
+.table-container {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin: 30px auto;
+  padding: 20px;
+  width: 130%;
+  max-width: 1200px;
+  margin-left: -15%;
+  margin-right: -15%;
+  display: block;
+  animation: containerFadeIn 1s ease-out;
+}
+
+@keyframes containerFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Заголовок */
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 3rem;
+  font-weight: 600;
+  color: #d2162b;
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  from { text-shadow: 0 0 5px #d2162b, 0 0 10px #d2162b; }
+  to   { text-shadow: 0 0 15px #d2162b, 0 0 20px #d2162b; }
+}
+
+/* Таблица */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  animation: tableFadeIn 0.8s ease-out;
+}
+
+@keyframes tableFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Ячейки таблицы */
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  color: #fff;
+  position: relative;
+  /* Убираем явные границы */
+  border: none;
+  /* Лёгкая тень для объёма */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+th {
+  /* Градиент для более глубокого эффекта */
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%);
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+td {
+  background: linear-gradient(135deg, rgba(18, 21, 24, 0.9) 0%, rgba(18, 21, 24, 1) 100%);
+}
+
+tr td:first-child {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+tr td:last-child {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  width: 70%;
+}
+
+/* Эффект при наведении: лёгкий подъём и усиление тени */
+tr:hover td {
+  background: rgba(18, 21, 24, 0.95);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Плавный переход для строк */
+tr {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Лёгкое внутреннее свечение при наведении */
+th::before,
+td::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 4px rgba(210, 22, 43, 0.4);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+tr:hover th::before,
+tr:hover td::before {
+  opacity: 1;
+}
+
+
+
+.checkbox-container label {
+    margin-left: 5px;
+    color: #aaa;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* Стили для ссылки EULA */
+.checkbox-container label a {
+    color: #aaa;
+    text-decoration: none;
+    border-bottom: 1px dotted #aaa;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.checkbox-container label a:hover {
+    color: #fff;
+    border-color: #fff;
+}
+
+        .logout-btn {
+            display: block;
+            width: 150px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #444;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .logout-btn:hover {
+            background-color: #666;
+        }
+
+        .title {
+            font-size: 3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .title:hover {
+            transform: scale(1.1);
+        }
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #aaa;
+            animation: fadeIn 2s ease-out;
+        }
+        .button {
+  border: 2px solid white;
+  color: white;
+  background: transparent;
+  padding: 10px 30px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  transition: 0.3s ease-in-out;
+  border-radius: 13px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+  margin-top: 5px;
+  display: inline-block; /* Обеспечиваем, что кнопка будет восприниматься как блок */
+}
+
+
+
+
+        .text-container {
+            text-align: center; /* Центрируем текст */
+            margin-top: 100px; /* Отступ сверху */
+            margin-left: 250px; /* Добавляем отступ слева */
+            font-size: 2.3em; /* Размер шрифта */
+            font-weight: 600; /* Жирный шрифт */
+            color: #fff; /* Белый цвет текста */
+            position: relative;
+            display: inline-block; /* Делаем блок с фоном только вокруг текста */
+            padding: 10px 30px; /* Добавляем отступы вокруг текста */
+        }
+
+        .text-container::before {
+            content: ''; /* Псевдоэлемент для фона */
+            position: absolute;
+            top: -10px; /* Отступ сверху */
+            left: -10px; /* Отступ слева */
+            right: -10px; /* Отступ справа */
+            bottom: -10px; /* Отступ снизу */
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1; /* Псевдоэлемент остается позади текста */
+            border-radius: 10px; /* Скругление углов */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.product-key td {
+
+    color: #fff;
+}
+.action-buttons {
+    display: flex;
+    justify-content: center; /* Центрируем кнопки */
+    align-items: center;
+    gap: 50px; /* Минимальное расстояние между кнопками */
+    margin-top: 20px; /* Отступ сверху */
+}
+
+
+.logout-btn {
+  border: 2px solid white;
+  color: white;
+  background: transparent;
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  transition: 0.3s ease-in-out;
+  border-radius: 11px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+  margin-top: 3px;
+  display: inline-block;
+  text-decoration: none; /* Убираем подчеркивание, если кнопка это ссылка */
+}
+
+.logout-btn:hover {
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3); /* Глубже при наведении */
+  transform: scale(1.05); /* Легкое увеличение */
+}
+
+.admin-btn {
+  color: white;
+  padding: 10px 10px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  transition: 0.3s ease-in-out;
+  border-radius: 13px;
+
+
+  margin-left: 60px; /* Отступ слева */
+  display: inline-block;
+  text-decoration: none; /* Убираем подчеркивание, если кнопка это ссылка */
+}
+
+
+.admin-btn:hover {
+  background: white;
+  color: black;
+  transform: scale(1.05); /* Легкое увеличение */
+}
+
+
+    .activate-key input {
+    width: calc(100% - 25px);
+    padding: 5px;
+    font-size: 14px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+}
+
+.activate-key td {
+    display: flex;
+    align-items: center;
+}
+
+.activate-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: white;
+    margin-left: 5px;
+}
+
+.activate-btn:hover {
+    color: #4CAF50;
+}
+
+
+
+
+.copy-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .copy-btn {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.3s, background 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+        }
+
+        .copy-btn:hover {
+            background: #45a049;
+
+            transform: scale(1.05);
+        }
+
+        .copy-btn:focus {
+            outline: none;
+        }
+
+        /* Эффект после копирования */
+        .copied {
+            background: linear-gradient(90deg, #00ff88, #00ffaa, #00ff88);
+            background-size: 400% 400%;
+            animation: glow 1.5s infinite, pulse 0.5s;
+            color: white !important;
+            box-shadow: 0px 0px 20px rgba(0, 255, 100, 0.8);
+        }
+
+
+
+        /* Пульсация */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Всплывающее уведомление */
+        .copy-message {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 255, 100, 0.8);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            text-shadow: 0px 0px 10px #00ff88;
+            font-weight: bold;
+            animation: textGlow 1.5s infinite;
+        }
+
+
+
+        .copy-message.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+
+
+        @keyframes particleAnim {
+            0% {
+                transform: scale(1) translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0) translate(var(--x), var(--y));
+                opacity: 0;
+            }
+        }
+        /* Ячейка таблицы */
+.activate-key td {
+    padding: 1px 15px;
+    vertical-align: middle; /* Вертикальное выравнивание */
+
+    align-items: center;
+}
+
+/* Стиль для input */
+.activate-key input {
+    width: 10px; /* Устанавливаем фиксированную ширину для строки ввода */
+    padding: 10px;
+    font-size: 10px;
+
+    border-radius: 8px;
+    outline: none;
+    background: transparent;
+    color: white;
+    margin-right: 200px; /* Отступ между input и кнопкой */
+}
+
+/* Стиль для кнопки */
+.activate-btn {
+    background: none;
+
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    color: white;
+    padding: 10px 15px;
+    display: inline-block;
+    vertical-align: middle;
+    transition: background-color 0.3s ease;
+
+}
+
+/* Ховер-эффект для кнопки */
+.activate-btn:hover {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+/* Сообщение */
+.activation-message {
+    color: #4CAF50;
+    font-size: 14px;
+    margin-top: 5px;
+}
+.activate-key input {
+    width: calc(1000% - 2540px);
+    padding: 5px;
+    font-size: 14px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+}
+/* Левая секция навбара (с логотипом и выбором языка) */
+    .navbar .left-section {
+      display: flex;
+      align-items: center;
+    }
+    /* Левая секция навбара: логотип и выбор языка */
+    .navbar .left-section {
+      display: flex;
+      align-items: center;
+    }
+    /* Логотип Vrime */
+    .navbar .title {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+    }
+    /* Блок выбора языка */
+    .language-selector {
+      position: relative;
+      display: inline-block;
+      margin-left: 15px; /* Отступ 10px от логотипа */
+    }
+    .lang-btn {
+      background: #121518;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .lang-btn:hover {
+      background: #1b1f24;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .lang-btn img.flag {
+      width: 24px;
+      height: auto;
+      margin-right: 8px;
+      border-radius: 1px;
+    }
+    /* Выпадающее меню, изначально скрытое */
+    .lang-options {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      background: #1b1f24;
+      border-radius: 5px;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      z-index: 1001;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    /* Когда добавлен класс open, меню становится видимым */
+    .language-selector.open .lang-options {
+      opacity: 1;
+      visibility: visible;
+    }
+    .lang-options a {
+      display: flex;
+      align-items: center;
+      padding: 5px 8px;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .lang-options a:hover {
+      background: #444;
+    }
+    .lang-options a img.flag {
+      width: 24px;
+      height: auto;
+      margin-right: 8px;
+      border-radius: 2px;
+    }
+    /* Правая секция: меню навигации */
+    .navbar .menu {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+    .navbar .menu a {
+      margin-left: 10px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: background 0.3s;
+      color: #fff;
+    }
+    .navbar .menu a:hover {
+      background-color: #1b1f24;
+    }
+
+
+
+
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+   filter: blur(5px) brightness(50%);
+
+  height: 100%;
+  background: url('background2.jpg') no-repeat center center/cover;
+  /* filter: blur(5px) brightness(50%); */
+  z-index: -1;
+  /* animation: backgroundAnimation 10s infinite linear; */
+  transition: transform 0.1s ease-out;
+}
+    </style>
+      <script>
+  let timeout;
+  let autoMove = false;
+  let currentX = 0, currentY = 0;
+  let targetX = 0, targetY = 0;
+  const scale = 1.1; // уменьшили масштаб для менее сильного приближения
+  const speed = 0.05; // Коэффициент плавности движения
+
+  // Функция для расчёта максимальных смещений по X и Y
+  function updateBounds(background) {
+    const maxX = (background.offsetWidth * scale - window.innerWidth) / 2;
+    const maxY = (background.offsetHeight * scale - window.innerHeight) / 2;
+    return { maxX, maxY };
+  }
+
+  // Функция для ограничения значения в заданном диапазоне
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    const background = document.querySelector('.background');
+    if (!background) return;
+
+    const { maxX, maxY } = updateBounds(background);
+
+    // Расчёт смещения с эффектом параллакса:
+    // Когда курсор слева — фон смещается вправо (и наоборот)
+    const newX = -maxX * ((e.clientX / window.innerWidth) - 0.5) * 2;
+    const newY = -maxY * ((e.clientY / window.innerHeight) - 0.5) * 2;
+
+    // Обновляем текущие и целевые позиции
+    currentX = clamp(newX, -maxX, maxX);
+    currentY = clamp(newY, -maxY, maxY);
+    targetX = currentX;
+    targetY = currentY;
+
+    background.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+
+    // Если мышь двигается, отменяем авто-анимацию
+    autoMove = false;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      autoMove = true;
+      setRandomTarget(background);
+      animateBackground(background);
+    }, 500);
+  });
+
+  // Устанавливаем случайную целевую позицию в пределах допустимых границ
+  function setRandomTarget(background) {
+    const { maxX, maxY } = updateBounds(background);
+    targetX = clamp(currentX + (Math.random() - 0.5) * 100, -maxX, maxX);
+    targetY = clamp(currentY + (Math.random() - 0.5) * 100, -maxY, maxY);
+  }
+
+  // Анимация плавного перехода к целевой точке
+  function animateBackground(background) {
+    if (!autoMove) return;
+    const { maxX, maxY } = updateBounds(background);
+
+    currentX += (targetX - currentX) * speed;
+    currentY += (targetY - currentY) * speed;
+
+    // Ограничиваем смещение, чтобы фон не выходил за границы
+    currentX = clamp(currentX, -maxX, maxX);
+    currentY = clamp(currentY, -maxY, maxY);
+
+    background.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+
+    // Если почти достигли цели – выбираем новую случайную позицию
+    if (Math.abs(currentX - targetX) < 1 && Math.abs(currentY - targetY) < 1) {
+      setRandomTarget(background);
+    }
+
+    requestAnimationFrame(() => animateBackground(background));
+  }
+
+</script>
+    <script>
+
+    function activateKey() {
+    let key = document.getElementById("activationKey").value;
+    let username = "DemoUser";
+
+    if (key.trim() === "") {
+        alert("Введите ключ перед активацией!");
+        return;
+    }
+
+    if (!confirm("Вы уверены, что хотите активировать ключ?")) {
+        return;
+    }
+
+    fetch(`/dashboard.html?user=${encodeURIComponent(username)}&key=${encodeURIComponent(key)}`)
+        .then(response => response.text())
+        .then(data => {
+            location.reload(); // Обновление страницы после успешного выполнения запроса
+        })
+        .catch(error => console.error('Ошибка:', error));
+}
+function copyToClipboard(event) {
+        // Получаем текст ключа продукта
+        var productKey = document.querySelector(".product-key td").textContent.trim().split(" ")[0];
+        // Копирование в буфер
+        navigator.clipboard.writeText(productKey).then(() => {
+            // Кнопка
+            const button = document.querySelector(".copy-btn");
+            button.classList.add("copied");
+            button.innerHTML = '<i class="fa-solid fa-check"></i> Copy';
+
+
+            // Сообщение
+            const message = document.querySelector(".copy-message");
+            message.classList.add("show");
+
+            // Эффект частиц
+            createParticles(event.clientX, event.clientY);
+
+            // Возвращаем кнопку в исходное состояние
+            setTimeout(() => {
+                button.classList.remove("copied");
+                button.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+
+                message.classList.remove("show");
+            }, 1500);
+        }).catch(err => {
+            console.error("Ошибка копирования:", err);
+        });
+    }
+
+    function createParticles(x, y) {
+        for (let i = 0; i < 10; i++) {
+            let particle = document.createElement("div");
+            particle.classList.add("particle");
+            document.body.appendChild(particle);
+
+            let offsetX = (Math.random() - 0.5) * 100;
+            let offsetY = (Math.random() - 0.5) * 100;
+            particle.style.setProperty("--x", `${offsetX}px`);
+            particle.style.setProperty("--y", `${offsetY}px`);
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+
+            setTimeout(() => {
+                particle.remove();
+            }, 800);
+        }
+    }
+
+</script>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="navbar">
+    <!-- Левая секция: логотип и выбор языка -->
+    <div class="left-section">
+        <div class="title" onclick="window.location.href='index.html'">Vrime</div>
+        <div class="language-selector">
+            <button class="lang-btn" id="lang-btn">
+                <img src="ru.png" alt="RU" class="flag" id="current-flag">
+                <span id="current-lang-text">Русский</span>
+            </button>
+            <div class="lang-options">
+                <a href="?lang=ru" data-lang="ru" data-text="Русский" data-flag="ru.png" onclick="changeLanguage(event)">
+                    <img src="ru.png" alt="RU" class="flag">
+                    Русский
+                </a>
+                <a href="?lang=uk" data-lang="uk" data-text="Українська" data-flag="uk.png" onclick="changeLanguage(event)">
+                    <img src="uk.png" alt="UA" class="flag">
+                    Українська
+                </a>
+                <a href="?lang=en" data-lang="en" data-text="English" data-flag="en.png" onclick="changeLanguage(event)">
+                    <img src="en.png" alt="EN" class="flag">
+                    English
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Правая секция: меню навигации -->
+<div class="menu">
+  
+  
+
+  <a href="buy.html"><i class="fa-solid fa-bag-shopping mr-2"></i> <span data-i18n="buy">Buy</span></a>
+  <a href="dashboard.html"><i class="fa-solid fa-user"></i> <span data-i18n="account">Account</span></a>
+<a href="index.html#features"><i class="fa-solid fa-building"></i> <span data-i18n="about">About</span></a>
+
+
+  <a href="support.html"><i class="fa-solid fa-headset"></i> <span class="no-translate"></span> <span data-i18n="support">Поддержка</span></a>
+
+
+</div>
+</div>
+<div class="container">
+  <div class="text-container" data-i18n="dashboard">Личный кабинет</div>
+
+
+  <div class="table-container">
+    <table>
+      <tr class="product-key">
+        <th><i class="fa-solid fa-id-card"> </i> <span data-i18n="product-key"> Ключ продукта:</span></th>
+        <td>
+          DEMO-KEY-GITHUB
+          <button class="copy-btn" onclick="copyToClipboard(event)">
+  <i class="fa-solid fa-copy"></i> <span data-i18n="copy">Copy</span>
+</button>
+          <div class="copy-message" data-i18n="copied">Скопировано!</div>
+        </td>
+      </tr>
+      <tr>
+       <th><i class="fa-solid fa-user">  </i> <span data-i18n="username"> Логин:</span></th>
+        <td>DemoUser</td>
+      </tr>
+      <tr>
+        <th><i class="fa-solid fa-money-bill-wave">  </i> <span data-i18n="subscription">  Подписка:</span></th>
+        <td>classic</td>
+      </tr>
+      <tr>
+        <th><i class="fa-solid fa-calendar-check"></i>  <span data-i18n="license-expiry"> Дата окончания Cs:</span></th>
+        <td>demo</td>
+      </tr>
+      <tr>
+        <th><i class="fa-solid fa-calendar-check"></i>  <span data-i18n="license-rustme"> Дата окончания RustMe:</span></th>
+        <td>demo</td>
+      </tr>
+      <tr>
+        <th><i class="fa-solid fa-bolt"></i> <span data-i18n="account-status">Статус аккаунта:</span></th>
+        <td>static</td>
+      </tr>
+      <tr>
+        <th><i class="fa-solid fa-hdd"></i> <span data-i18n="hwid">Хвид:</span></th>
+        <td>GitHub Pages</td>
+      </tr>
+      <tr>
+        <th><i class="fa-solid fa-heart"></i> <span data-i18n="role">Роль:</span></th>
+        <td>Demo</td>
+      </tr>
+      <tr class="activate-key">
+        <th><i class="fa-solid fa-key"></i> <span data-i18n="activate-key">Активировать ключ:</span></th>
+        <td>
+          <input type="text" id="activationKey" placeholder="Enter your activated key">
+          <button class="activate-btn" onclick="activateKey()">
+  <i class="fa-solid fa-check"></i>
+</button>
+
+          <div class="activation-message" style="display: none;" data-i18n="activated">Активировано!</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Кнопка выхода расположена ниже таблицы -->
+  <div class="action-buttons">
+    <a href="logout.html" class="action-btn logout-btn">
+  <i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="logout">Выйти</span>
+</a>
+<a href="download.html" class="action-btn logout-btn">
+  <i class="fa-solid fa-download"></i> <span data-i18n="download">Скачать лоадер</span>
+</a>
+<a href="buy.html" class="action-btn logout-btn">
+  <i class="fa-solid fa-bag-shopping mr-2"></i></i> <span data-i18n="buy-services">Купить</span>
+</a>
+
+
+
+  </div>
+</div>
+</body>
+</html>
+
+<script>
+  // Находим элемент выбора языка
+  const langSelector = document.querySelector('.language-selector');
+  let closeTimeout;
+
+  // При наведении сразу открываем меню
+  langSelector.addEventListener('mouseenter', () => {
+    clearTimeout(closeTimeout);
+    langSelector.classList.add('open');
+  });
+
+  // При уходе курсора начинаем отсчет 1.5 сек, после которого меню закрывается
+  langSelector.addEventListener('mouseleave', () => {
+    closeTimeout = setTimeout(() => {
+      langSelector.classList.remove('open');
+    }, 200);
+  });
+
+  // Обработчики для смены языка
+  document.querySelectorAll(".lang-options a").forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const lang = e.target.closest("a").getAttribute("href").replace("?lang=", "");
+      setLanguage(lang);  // Немедленно применяет язык
+    });
+  });
+
+  const translations = {
+    ru: {
+      buy: "Купить",
+      account: "Аккаунт",
+      about: "О нас",
+      support: "Поддержка",
+      dashboard: "Личный кабинет",
+      "product-key": "Ключ продукта:",
+      "copy": "Copy",
+      "username": "Логин:",
+      "subscription": "Подписка:",
+      "registration-date": "Дата регистрации:",
+      "license-expiry": "Окончания лицензии CS2:",
+      "license-rustme": "Окончания лицензии RustMe:",
+      "account-status": "Статус аккаунта:",
+      "hwid": "Хвид:",
+      "role": "Роль:",
+      "activate-key": "Активировать ключ:",
+      "activated": "Активировано!",
+      "logout": "Выйти",
+      "download": "Скачать",
+      "admin-panel": "",
+      "buy-services": "Купить"
+    },
+    en: {
+      buy: "Buy",
+      account: "Account",
+      about: "About",
+      support: "Support",
+      dashboard: "My dashboard",
+      "product-key": "Product Key:",
+      "copy": "Copy",
+      "username": "Username:",
+      "subscription": "Subscription:",
+      "registration-date": "Registration Date:",
+      "license-expiry": "License Expiry CS2:",
+      "license-rustme": "License Expiry RustMe:",
+      "account-status": "Account Status:",
+      "hwid": "HWID:",
+      "role": "Role:",
+      "activate-key": "Activate Key:",
+      "activated": "Activated!",
+      "logout": "Logout",
+      "download": "Download",
+      "admin-panel": "",
+      "buy-services": "Buy Services"
+    },
+    uk: {
+      buy: "Купити",
+      account: "Аккаунт",
+      about: "Про нас",
+      support: "Підтримка",
+      dashboard: "Особистий кабінет",
+      "product-key": "Ключ продукту:",
+      "copy": "Copy",
+      "username": "Логін:",
+      "subscription": "Підписка:",
+      "registration-date": "Дата реєстрації:",
+      "license-expiry": "Дата закінчення CS2:",
+      "license-rustme": "Дата закінчення RustMe:",
+      "account-status": "Статус аккаунта:",
+      "hwid": "HWID:",
+      "role": "Роль:",
+      "activate-key": "Активувати ключ:",
+      "activated": "Активовано!",
+      "logout": "Вийти",
+      "download": "Завантажити",
+      "admin-panel": "",
+      "buy-services": "Купити"
+    }
+  };
+
+  // Функция смены языка
+  function setLanguage(lang) {
+    localStorage.setItem("language", lang); // Сохраняем язык в localStorage
+
+    // Меняем флаг
+    document.querySelector(".flag").src = lang === 'ru' ? 'ru.png' : lang === 'en' ? 'uk.png' : 'en.png';
+    document.querySelector("#current-lang-text").textContent = lang === 'ru' ? "Русский" : lang === 'en' ? "English" : "Українська";
+
+    // Применяем переводы
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      el.textContent = translations[lang][key];
+    });
+  }
+
+  // Получаем выбранный язык из localStorage и применяем
+  const storedLanguage = localStorage.getItem("language") || "ru";
+  setLanguage(storedLanguage);
+</script>
+
+
+

@@ -1,0 +1,636 @@
+
+
+<!DOCTYPE html>
+<html lang="ru">
+</head>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Техническая поддержка</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #111;
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        html {
+  font-size: 80%;
+}
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 70px;
+
+            background-color: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        h2 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        .chat {
+            width: 100%;
+            margin-top: 0px; /* Добавляем небольшой отступ сверху */
+            max-width: 550px; /* Максимальная ширина поля */
+            height: 280px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #121518;
+
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .message {
+            padding: 10px 14px;
+            margin: 8px 0;
+            border-radius: 15px;
+            font-size: 14px;
+            word-wrap: break-word;
+            max-width: 75%;
+        }
+        .user {
+            background: #4a76a8;
+            align-self: flex-end;
+            color: #fff;
+        }
+        .admin {
+            background: #444;
+            align-self: flex-start;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 12px;
+        }
+        input, textarea {
+            width: 90%;
+            max-width: 400px;
+            padding: 12px;
+            background: #121518;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            resize: vertical;
+            height: 80px;
+        }
+        button {
+            background: #4a76a8;
+            border: none;
+            padding: 10px 12px;
+            border-radius: 19px;
+            cursor: pointer;
+            color: white;
+            transition: 0.3s;
+            font-size: 14px;
+            width: 140px;
+        }
+        button:hover { background: #3a5c8a; }
+        .close-btn {
+            background: #ff4d4d;
+            width: 140px;
+            margin-top: 20px;
+        }
+        .close-btn:hover { background: #cc0000; }
+        /* Анимации */
+        input, textarea, button {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+        input:nth-child(1), textarea:nth-child(2), button:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        textarea {
+
+
+    width: 100%; /* Сделать поле ввода по ширине контейнера */
+    max-width: 550px; /* Максимальная ширина поля */
+    padding: 12px;
+    background: #121518;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    resize: vertical;
+    height: 80px; /* Можно установить нужную высоту */
+    margin-bottom: 10px;
+}
+.navbar {
+            position: absolute;
+            top: 0;
+            width: 90%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-radius: 20px;
+            margin-left: 10%;
+            margin-right: 10%;
+            animation: slideDown 1s ease-out;
+        }
+        .navbar .title {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-left: 50px;
+
+    padding-top: 10px;  /* Добавил отступ сверху, чтобы переместить текст вниз */
+}
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #121518;
+        }
+        .title {
+            font-size: 3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .title:hover {
+            transform: scale(1.1);
+        }
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('background2.jpg') no-repeat center center/cover;
+            filter: blur(5px) brightness(50%);
+            z-index: -1;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        /* Стили для статуса тикета с анимацией */
+        .status {
+            font-weight: bold;
+            font-size: 18px;
+            padding: 7px;
+            border-radius: 24px; /* Скругленные углы */
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0; /* Изначальная невидимость */
+            animation: fadeIn 1s forwards; /* Анимация появления */
+        }
+
+        /* Анимация плавного появления */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Стиль для открытого тикета */
+        .status.open {
+            
+            color: white;
+            transform: scale(1.1); /* Легкое увеличение */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Стиль для закрытого тикета */
+        .status.closed {
+
+            color: white;
+            transform: scale(1.1); /* Легкое увеличение */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* При наведении увеличиваем элемент */
+        .status:hover {
+            transform: scale(1.15); /* Увеличение при наведении */
+        }
+
+        /* Левая секция навбара (с логотипом и выбором языка) */
+    .navbar .left-section {
+      display: flex;
+      align-items: center;
+    }
+    /* Левая секция навбара: логотип и выбор языка */
+    .navbar .left-section {
+      display: flex;
+      align-items: center;
+    }
+    /* Логотип Vrime */
+    .navbar .title {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+    }
+    /* Блок выбора языка */
+    .language-selector {
+      position: relative;
+      display: inline-block;
+      margin-left: 15px; /* Отступ 10px от логотипа */
+    }
+    .lang-btn {
+      background: #121518;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .lang-btn:hover {
+      background: #1b1f24;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .lang-btn img.flag {
+      width: 24px;
+      height: auto;
+      margin-right: 8px;
+      border-radius: 1px;
+    }
+    /* Выпадающее меню, изначально скрытое */
+    .lang-options {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      background: #1b1f24;
+      border-radius: 5px;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      z-index: 1001;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    /* Когда добавлен класс open, меню становится видимым */
+    .language-selector.open .lang-options {
+      opacity: 1;
+      visibility: visible;
+    }
+    .lang-options a {
+      display: flex;
+      align-items: center;
+      padding: 5px 8px;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .lang-options a:hover {
+      background: #444;
+    }
+    .lang-options a img.flag {
+      width: 24px;
+      height: auto;
+      margin-right: 8px;
+      border-radius: 2px;
+    }
+    /* Правая секция: меню навигации */
+    .navbar .menu {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+    .navbar .menu a {
+      margin-left: 10px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: background 0.3s;
+      color: #fff;
+    }
+    .navbar .menu a:hover {
+      background: #121518
+    }
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+   filter: blur(5px) brightness(50%);
+
+  height: 100%;
+  background: url('background2.jpg') no-repeat center center/cover;
+  /* filter: blur(5px) brightness(50%); */
+  z-index: -1;
+  /* animation: backgroundAnimation 10s infinite linear; */
+  transition: transform 0.1s ease-out;
+}
+    </style>
+  <script>
+  let timeout;
+  let autoMove = false;
+  let currentX = 0, currentY = 0;
+  let targetX = 0, targetY = 0;
+  const scale = 1.1; // уменьшили масштаб для менее сильного приближения
+  const speed = 0.05; // Коэффициент плавности движения
+
+  // Функция для расчёта максимальных смещений по X и Y
+  function updateBounds(background) {
+    const maxX = (background.offsetWidth * scale - window.innerWidth) / 2;
+    const maxY = (background.offsetHeight * scale - window.innerHeight) / 2;
+    return { maxX, maxY };
+  }
+
+  // Функция для ограничения значения в заданном диапазоне
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    const background = document.querySelector('.background');
+    if (!background) return;
+
+    const { maxX, maxY } = updateBounds(background);
+
+    // Расчёт смещения с эффектом параллакса:
+    // Когда курсор слева — фон смещается вправо (и наоборот)
+    const newX = -maxX * ((e.clientX / window.innerWidth) - 0.5) * 2;
+    const newY = -maxY * ((e.clientY / window.innerHeight) - 0.5) * 2;
+
+    // Обновляем текущие и целевые позиции
+    currentX = clamp(newX, -maxX, maxX);
+    currentY = clamp(newY, -maxY, maxY);
+    targetX = currentX;
+    targetY = currentY;
+
+    background.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+
+    // Если мышь двигается, отменяем авто-анимацию
+    autoMove = false;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      autoMove = true;
+      setRandomTarget(background);
+      animateBackground(background);
+    }, 500);
+  });
+
+  // Устанавливаем случайную целевую позицию в пределах допустимых границ
+  function setRandomTarget(background) {
+    const { maxX, maxY } = updateBounds(background);
+    targetX = clamp(currentX + (Math.random() - 0.5) * 100, -maxX, maxX);
+    targetY = clamp(currentY + (Math.random() - 0.5) * 100, -maxY, maxY);
+  }
+
+  // Анимация плавного перехода к целевой точке
+  function animateBackground(background) {
+    if (!autoMove) return;
+    const { maxX, maxY } = updateBounds(background);
+
+    currentX += (targetX - currentX) * speed;
+    currentY += (targetY - currentY) * speed;
+
+    // Ограничиваем смещение, чтобы фон не выходил за границы
+    currentX = clamp(currentX, -maxX, maxX);
+    currentY = clamp(currentY, -maxY, maxY);
+
+    background.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+
+    // Если почти достигли цели – выбираем новую случайную позицию
+    if (Math.abs(currentX - targetX) < 1 && Math.abs(currentY - targetY) < 1) {
+      setRandomTarget(background);
+    }
+
+    requestAnimationFrame(() => animateBackground(background));
+  }
+
+</script>
+</head>
+<body>
+<div class="background"></div>
+  <div class="navbar">
+    <!-- Левая секция: логотип и выбор языка -->
+    <div class="left-section">
+      <div class="title" onclick="window.location.href='index.html'">Vrime</div>
+      <div class="language-selector">
+        <button class="lang-btn" id="lang-btn">
+          <img src="ru.png" alt="RU" class="flag" id="current-flag">
+          <span id="current-lang-text">Русский</span>
+        </button>
+        <div class="lang-options">
+          <a href="?lang=ru" data-lang="ru" data-text="Русский" data-flag="ru.png" onclick="changeLanguage(event)">
+            <img src="ru.png" alt="RU" class="flag"> Русский
+          </a>
+          <a href="?lang=uk" data-lang="uk" data-text="Українська" data-flag="uk.png" onclick="changeLanguage(event)">
+            <img src="uk.png" alt="UA" class="flag"> Українська
+          </a>
+          <a href="?lang=en" data-lang="en" data-text="English" data-flag="en.png" onclick="changeLanguage(event)">
+            <img src="en.png" alt="EN" class="flag"> English
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu">
+    
+  
+
+      <a href="buy.html"><i class="fa-solid fa-bag-shopping mr-2"></i> <span data-i18n="buy">Buy</span></a>
+  <a href="dashboard.html"><i class="fa-solid fa-user"></i> <span data-i18n="account">Account</span></a>
+  <a href="index.html#features"><i class="fa-solid fa-building"></i> <span data-i18n="about">About</span></a>
+
+
+  <a href="support.html"><i class="fa-solid fa-headset"></i> <span class="no-translate"></span> <span data-i18n="support">Поддержка</span></a>
+    </div>
+  </div>
+
+    <div class="container">
+      <h2 data-i18n="createTicketTitle">Создать тикет</h2>
+      <form id="support-form" class="input-container">
+        <input type="text" name="subject" placeholder="Логин вашего аккаунта" data-i18n-placeholder="accountLoginPlaceholder" required>
+        <textarea name="message" placeholder="Опишите свою проблему" data-i18n-placeholder="problemDescriptionPlaceholder" required></textarea>
+        <button type="submit" data-i18n="sendButton">
+          <i class="fa-solid fa-paper-plane"></i> Отправить
+        </button>
+      </form>
+      <div id="support-result" class="chat" style="display:none;margin-top:20px;">
+        <div class="message admin"><b>Тех.Поддержка:</b> GitHub Pages не принимает тикеты. Для реальной поддержки подключите серверную версию сайта.</div>
+      </div>
+  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('support-form');
+    const result = document.getElementById('support-result');
+    if (form && result) {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        result.style.display = 'block';
+        form.reset();
+      });
+    }
+  });
+</script>
+<script>
+    // Функция смены языка с поддержкой перевода атрибутов (placeholder)
+    function setLanguage(lang) {
+      localStorage.setItem("language", lang); // Сохраняем язык в localStorage
+
+      // Меняем флаг
+      document.querySelector(".flag").src = lang === 'ru' ? 'ru.png' : lang === 'en' ? 'uk.png' : 'en.png';
+      document.querySelector("#current-lang-text").textContent = lang === 'ru' ? "Русский" : lang === 'en' ? "English" : "Українська";
+
+      // Перебираем элементы для перевода
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+
+      // Переводим атрибуты placeholder
+      const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+      placeholders.forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang][key]) {
+          el.placeholder = translations[lang][key];
+        }
+      });
+    }
+
+    // Обработчик для открытия/закрытия меню выбора языка
+    const langSelector = document.querySelector('.language-selector');
+    let closeTimeout;
+    langSelector.addEventListener('mouseenter', () => {
+      clearTimeout(closeTimeout);
+      langSelector.classList.add('open');
+    });
+    langSelector.addEventListener('mouseleave', () => {
+      closeTimeout = setTimeout(() => {
+        langSelector.classList.remove('open');
+      }, 200);
+    });
+    document.querySelectorAll(".lang-options a").forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const lang = e.target.closest("a").getAttribute("href").replace("?lang=", "");
+        setLanguage(lang);
+      });
+    });
+
+    const translations = {
+      ru: {
+        buy: "Купить",
+        account: "Аккаунт",
+        about: "О нас",
+        support: "Поддержка",
+        createTicketTitle: "Создать тикет",
+        accountLoginPlaceholder: "Логин вашего аккаунта",
+        problemDescriptionPlaceholder: "Опишите свою проблему",
+        sendMessageButton: "Отправить <i class='fa-solid fa-paper-plane'></i> ",
+        ticketTitle: "Тикет:",
+        user: "Вы",
+        techSupport: "Тех.Поддержка",
+        messagePlaceholder: "Введите сообщение",
+        sendMessageButton: "<i class='fa-solid fa-paper-plane'></i> Отправить",  // Иконка для отправки сообщения
+    deleteTicketButton: "<i class='fa-solid fa-trash'></i> Удалить тикет",  // Иконка для удаления
+      },
+      en: {
+        buy: "Buy",
+        account: "Account",
+        about: "About",
+        support: "Support",
+        createTicketTitle: "Create Ticket",
+        accountLoginPlaceholder: "Your account login",
+        problemDescriptionPlaceholder: "Describe your problem",
+        sendButton: "<i class='fa-solid fa-paper-plane'></i> Send",
+        ticketTitle: "Ticket:",
+        user: "You",
+        techSupport: "Tech Support",
+        messagePlaceholder: "Enter your message",
+        sendMessageButton: "<i class='fa-solid fa-paper-plane'></i> Send",
+        deleteTicketButton: "<i class='fa-solid fa-trash'></i> Delete Ticket"
+      },
+      uk: {
+        buy: "Купити",
+        account: "Аккаунт",
+        about: "Про нас",
+        support: "Підтримка",
+        createTicketTitle: "Створити тікет",
+        accountLoginPlaceholder: "Логін вашого акаунту",
+        problemDescriptionPlaceholder: "Опишіть вашу проблему",
+        sendButton: "<i class='fa-solid fa-paper-plane'></i> Надіслати",
+        ticketTitle: "Тікет:",
+        user: "Ви",
+        techSupport: "Техпідтримка",
+        messagePlaceholder: "Введіть повідомлення",
+        sendMessageButton: "<i class='fa-solid fa-paper-plane'></i> Надіслати",
+        deleteTicketButton: "<i class='fa-solid fa-trash'></i> Видалити тікет"
+      }
+    };
+
+    // Устанавливаем язык при загрузке страницы
+    const storedLanguage = localStorage.getItem("language") || "ru";
+    setLanguage(storedLanguage);
+
+    // Функция смены языка при клике по пункту меню
+    function changeLanguage(event) {
+      event.preventDefault();
+      const lang = event.target.closest("a").getAttribute("href").replace("?lang=", "");
+      setLanguage(lang);
+      const langText = event.target.closest("a").getAttribute("data-text");
+      const langFlag = event.target.closest("a").getAttribute("data-flag");
+      document.getElementById("current-flag").src = langFlag;
+      document.getElementById("current-lang-text").textContent = langText;
+    }
+  </script>
+
+</body>
+</html>

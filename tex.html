@@ -1,0 +1,618 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Сайт на технических работах</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        html, body {
+            overflow: hidden;
+            height: 100%;
+        }
+        /* Фон */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('background2.jpg') no-repeat center center/cover;
+            filter: blur(5px) brightness(50%);
+            z-index: -1;
+            transition: transform 0.1s ease-out;
+        }
+        /* Navbar */
+        .navbar {
+            position: absolute;
+            top: 0;
+            width: 90%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-radius: 20px;
+            margin: 15px 5%;
+            animation: slideDown 1s ease-out;
+        }
+        .navbar .title {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #1b1f24;
+        }
+        .language-selector {
+            position: relative;
+            display: inline-block;
+            margin-left: 15px;
+        }
+        .lang-btn {
+            background: #121518;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .lang-btn:hover {
+            background: #1b1f24;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .lang-btn img.flag {
+            width: 24px;
+            height: auto;
+            margin-right: 8px;
+            border-radius: 1px;
+        }
+        .lang-options {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: #1b1f24;
+            border-radius: 5px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.5);
+            z-index: 1001;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .language-selector.open .lang-options {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lang-options a {
+            display: flex;
+            align-items: center;
+            padding: 5px 8px;
+            color: #fff;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .lang-options a:hover {
+            background: #444;
+        }
+        .lang-options a img.flag {
+            width: 24px;
+            height: auto;
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+        .navbar .menu {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .menu a {
+            margin-left: 10px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background 0.3s;
+            color: #fff;
+        }
+        .navbar .menu a:hover {
+            background-color: #1b1f24;
+        }
+        /* Контейнер главного контента */
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+        }
+        .container .title-maintenance {
+            font-size: 3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .container .title-maintenance:hover {
+            transform: scale(1.05);
+        }
+        .container .message {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 30px;
+        }
+        .buttons a {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 5px;
+            transition: background 0.3s ease;
+        }
+        .btn-primary {
+            background: #d1172b;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #b31425;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #d1172b;
+            border: 2px solid rgba(209,23,43,0.3);
+        }
+        .btn-secondary:hover {
+            background: rgba(209,23,43,0.1);
+        }
+        /* Секция для администраторов */
+.admin-section {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    font-size: 14px;
+    color: #fff;
+    z-index: 10; /* Повышение приоритетности слоя */
+    pointer-events: auto; /* Разрешить клики по элементам */
+}
+
+/* Стили для ссылки */
+.admin-section a {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+        .admin-section a {
+            color: #df172d;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .admin-section a:hover {
+            text-decoration: underline;
+        }
+    .navbar {
+            position: absolute;
+            top: 0;
+            width: 90%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-radius: 20px;
+            margin-left: 5%;
+            margin-right: 10%;
+            animation: slideDown 1s ease-out;
+        }
+        .navbar .title {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-left: 50px;
+
+    padding-top: 10px;
+}
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #1b1f24;
+        }
+    .navbar .left-section {
+      display: flex;
+      align-items: center;
+    }
+    /* Левая секция навбара: логотип и выбор языка */
+    .navbar .left-section {
+      display: flex;
+      align-items: center;
+    }
+    /* Логотип Vrime */
+    .navbar .title {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+    }
+    /* Блок выбора языка */
+    .language-selector {
+      position: relative;
+      display: inline-block;
+      margin-left: 15px; /* Отступ 10px от логотипа */
+    }
+    .lang-btn {
+      background: #121518;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .lang-btn:hover {
+      background: #1b1f24;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .lang-btn img.flag {
+      width: 24px;
+      height: auto;
+      margin-right: 8px;
+      border-radius: 1px;
+    }
+    /* Выпадающее меню, изначально скрытое */
+    .lang-options {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      background: #1b1f24;
+      border-radius: 5px;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      z-index: 1001;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    /* Когда добавлен класс open, меню становится видимым */
+    .language-selector.open .lang-options {
+      opacity: 1;
+      visibility: visible;
+    }
+    .lang-options a {
+      display: flex;
+      align-items: center;
+      padding: 5px 8px;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .lang-options a:hover {
+      background: #444;
+    }
+    .lang-options a img.flag {
+      width: 24px;
+      height: auto;
+      margin-right: 8px;
+      border-radius: 2px;
+    }
+    /* Правая секция: меню навигации */
+    .navbar .menu {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+    .navbar .menu a {
+      margin-left: 10px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: background 0.3s;
+      color: #fff;
+    }
+    .navbar .menu a:hover {
+      background-color: #1b1f24;
+    }
+
+  height: 100%;
+  background: url('background2.jpg') no-repeat center center/cover;
+  /* filter: blur(5px) brightness(50%); */
+  z-index: -1;
+  /* animation: backgroundAnimation 10s infinite linear; */
+  transition: transform 0.1s ease-out;
+}
+.title {
+            font-size: 3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .title:hover {
+            transform: scale(1.1);
+        }
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+   filter: blur(5px) brightness(50%);
+
+  height: 100%;
+  background: url('background2.jpg') no-repeat center center/cover;
+  /* filter: blur(5px) brightness(50%); */
+  z-index: -1;
+  /* animation: backgroundAnimation 10s infinite linear; */
+  transition: transform 0.1s ease-out;
+}
+      .title {
+            font-size: 3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .title:hover {
+            transform: scale(1.1);
+        }
+        p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+    }
+    .buttons a {
+      display: inline-block;
+      padding: 15px 30px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      margin: 5px;
+      transition: background 0.3s ease;
+    }
+    .btn-primary {
+      background: #d1172b;
+      color: ##df172d;
+    }
+    .btn-primary:hover {
+      background: #df172d;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: #df172d;
+      border: 2px solid rgba(209,23,43,0.3);
+    }
+    .btn-secondary:hover {
+      background: rgba(209,23,43,0.1);
+    }
+    .divider {
+      width: 1px;
+      background: linear-gradient(180deg, rgba(209,23,43,0) 0%, #d1172b 50%, rgba(209,23,43,0) 100%);
+      height: 80%;
+      align-self: center;
+    }
+
+     /* Стили для модального окна ошибки */
+        .modal-error {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-10%, -10%) scale(0.8);
+            background: #df172d;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            font-weight: 600;
+            font-size: 1.2rem;
+            animation: none;
+            pointer-events: none;
+        }
+
+        /* Анимация модального окна */
+        @keyframes showError {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        .navbar, .menu {
+    position: relative;
+    z-index: 100;
+}
+.container {
+    margin-top: -70px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 50px);
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+}
+
+  </style>
+<script>
+  let timeout;
+  let autoMove = false;
+  let currentX = 0, currentY = 0;
+  let targetX = 0, targetY = 0;
+  const scale = 1.1; // уменьшили масштаб для менее сильного приближения
+  const speed = 0.05; // Коэффициент плавности движения
+
+  // Функция для расчёта максимальных смещений по X и Y
+  function updateBounds(background) {
+    const maxX = (background.offsetWidth * scale - window.innerWidth) / 2;
+    const maxY = (background.offsetHeight * scale - window.innerHeight) / 2;
+    return { maxX, maxY };
+  }
+
+  // Функция для ограничения значения в заданном диапазоне
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    const background = document.querySelector('.background');
+    if (!background) return;
+
+    const { maxX, maxY } = updateBounds(background);
+
+    // Расчёт смещения с эффектом параллакса:
+    // Когда курсор слева — фон смещается вправо (и наоборот)
+    const newX = -maxX * ((e.clientX / window.innerWidth) - 0.5) * 2;
+    const newY = -maxY * ((e.clientY / window.innerHeight) - 0.5) * 2;
+
+    // Обновляем текущие и целевые позиции
+    currentX = clamp(newX, -maxX, maxX);
+    currentY = clamp(newY, -maxY, maxY);
+    targetX = currentX;
+    targetY = currentY;
+
+    background.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+
+    // Если мышь двигается, отменяем авто-анимацию
+    autoMove = false;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      autoMove = true;
+      setRandomTarget(background);
+      animateBackground(background);
+    }, 500);
+  });
+
+  // Устанавливаем случайную целевую позицию в пределах допустимых границ
+  function setRandomTarget(background) {
+    const { maxX, maxY } = updateBounds(background);
+    targetX = clamp(currentX + (Math.random() - 0.5) * 100, -maxX, maxX);
+    targetY = clamp(currentY + (Math.random() - 0.5) * 100, -maxY, maxY);
+  }
+
+  // Анимация плавного перехода к целевой точке
+  function animateBackground(background) {
+    if (!autoMove) return;
+    const { maxX, maxY } = updateBounds(background);
+
+    currentX += (targetX - currentX) * speed;
+    currentY += (targetY - currentY) * speed;
+
+    // Ограничиваем смещение, чтобы фон не выходил за границы
+    currentX = clamp(currentX, -maxX, maxX);
+    currentY = clamp(currentY, -maxY, maxY);
+
+    background.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+
+    // Если почти достигли цели – выбираем новую случайную позицию
+    if (Math.abs(currentX - targetX) < 1 && Math.abs(currentY - targetY) < 1) {
+      setRandomTarget(background);
+    }
+
+    requestAnimationFrame(() => animateBackground(background));
+  }
+
+</script>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="navbar">
+        <!-- Левая секция: логотип и выбор языка -->
+        <div class="left-section">
+            <div class="title" onclick="window.location.href='index.html'">Vrime</div>
+            <div class="language-selector">
+                <button class="lang-btn" id="lang-btn">
+                    <img src="ru.png" alt="RU" class="flag" id="current-flag">
+                    <span id="current-lang-text">Русский</span>
+                </button>
+                <div class="lang-options">
+                    <a href="?lang=ru" data-lang="ru" data-text="Русский" data-flag="ru.png" onclick="changeLanguage(event)">
+                        <img src="ru.png" alt="RU" class="flag">
+                        Русский
+                    </a>
+                    <a href="?lang=uk" data-lang="uk" data-text="Українська" data-flag="uk.png" onclick="changeLanguage(event)">
+                        <img src="uk.png" alt="UA" class="flag">
+                        Українська
+                    </a>
+                    <a href="?lang=en" data-lang="en" data-text="English" data-flag="en.png" onclick="changeLanguage(event)">
+                        <img src="en.png" alt="EN" class="flag">
+                        English
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая секция: меню навигации -->
+        <div class="menu">
+            <a href="support.html"><i class="fa-solid fa-headset"></i> Телеграмм</a>
+            <a href="support.html"><i class="fa-solid fa-headset"></i> Поддержка</a>
+        </div>
+    </div>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="title-maintenance" onclick="window.location.href='index.html'">Технические работы</div>
+        <div class="message">Извините за временные неудобства, работа клиента и сайта приостановленна. Мы скоро вернёмся.</div>
+        <div class="buttons">
+            <a href="support.html" class="btn-primary">Написать в поддержку</a>
+        </div>
+    </div>
+    <!-- Admin Section -->
+    <div class="admin-section">
+        Для администраторов: <a href="admin.html">Админ панель</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,771 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vrime - Вход / Регистрация</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #111;
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('background2.jpg') no-repeat center center/cover;
+            filter: blur(5px) brightness(50%);
+            z-index: -1;
+        }
+       .title {
+            font-size: 3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .title:hover {
+            transform: scale(1.1);
+        }
+        .description {
+            font-size: 1.3em;
+            color: #ddd;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+        .features {
+            text-align: left;
+            font-size: 1.1em;
+            color: #aaa;
+            line-height: 1.8;
+            margin-top: 30px;
+        }
+        .features h3 {
+            font-size: 1.6em;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        .features ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .features li {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-out;
+        }
+        .form-title {
+        font-size: 2em;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 15px;
+    }
+    .small-text {
+        font-size: 0.9em;
+        color: gray;
+        margin-top: 5px;
+    }
+        .switch-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+
+        .switch-buttons button {
+  border: 2px solid white;
+  color: white;
+  background: transparent;
+  padding: 10px 16px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  transition: 0.3s ease-in-out;
+  border-radius: 13px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+
+  display: inline-block;
+  text-decoration: none; /* Убираем подчеркивание, если кнопка это ссылка */
+  margin-right: 10px; /* Расстояние между кнопками */
+}
+
+
+
+.switch-buttons button.active {
+  background: white;
+
+  margin-left: 10px;
+  color: black;
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3); /* Глубже при наведении */
+  transform: scale(1.05); /* Легкое увеличение */
+}
+
+
+         .error-message {
+            color: white;
+            font-weight: bold;
+            margin-top: 15px;
+            padding: 10px;
+        }
+        .form-container {
+            display: none;
+        }
+        .form-container.active {
+            display: block;
+        }
+        .switch-buttons button.active {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #1b1f24;
+            color: white;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button {
+            background-color: #1b1f24;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: calc(100% - 20px);
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #22282e;
+        }
+        .navbar {
+            position: absolute;
+            top: 0;
+            width: 90%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-radius: 20px;
+            margin-left: 10%;
+            margin-right: 10%;
+            animation: slideDown 1s ease-out;
+        }
+        .navbar .title {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-left: 50px;
+
+    padding-top: 10px;
+}
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #1b1f24;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            width: 90%;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            border-radius: 20px;
+            margin-left: 10%;
+            margin-right: 10%;
+            animation: slideDown 1s ease-out;
+        }
+        .navbar .title {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-left: 50px;
+
+    padding-top: 10px;
+}
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #1b1f24;
+        }
+        /* Контейнер для чекбокса с центральным выравниванием */
+.checkbox-container {
+    display: inline-flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Скрываем стандартный чекбокс и создаём кастомный */
+.checkbox-container input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    background: #444;             /* Темный фон */
+    border: 2px solid #666;        /* Серые границы */
+    border-radius: 6px;            /* Немного скругляем углы */
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Эффект при наведении */
+.checkbox-container input[type="checkbox"]:hover {
+    border-color: #888;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+/* Состояние "checked" с красивым градиентом */
+.checkbox-container input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, #777, #555);
+    border-color: #aaa;
+}
+
+/* Галочка, создаваемая псевдоэлементом */
+.checkbox-container input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 8px;
+    width: 6px;
+    height: 12px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Подпись рядом с чекбоксом – уменьшаем отступ, чтобы текст был сразу после галочки */
+.checkbox-container label {
+    margin-left: 5px;
+    color: #aaa;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* Стили для ссылки EULA */
+.checkbox-container label a {
+    color: #aaa;
+    text-decoration: none;
+    border-bottom: 1px dotted #aaa;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.checkbox-container label a:hover {
+    color: #fff;
+    border-color: #fff;
+}
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+/* Левая секция навбара (с логотипом и выбором языка) */
+    .navbar .left-section {
+      display: flex;
+      align-items: center;
+    }
+    /* Левая секция навбара: логотип и выбор языка */
+    .navbar .left-section {
+      display: flex;
+      align-items: center;
+    }
+    /* Логотип Vrime */
+    .navbar .title {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+    }
+    /* Блок выбора языка */
+    .language-selector {
+      position: relative;
+      display: inline-block;
+      margin-left: 15px; /* Отступ 10px от логотипа */
+    }
+    .lang-btn {
+      background: #121518;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .lang-btn:hover {
+      background: #1b1f24;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .lang-btn img.flag {
+      width: 24px;
+      height: auto;
+      margin-right: 8px;
+      border-radius: 1px;
+    }
+    /* Выпадающее меню, изначально скрытое */
+    .lang-options {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      background: #1b1f24;
+      border-radius: 5px;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.5);
+      z-index: 1001;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    /* Когда добавлен класс open, меню становится видимым */
+    .language-selector.open .lang-options {
+      opacity: 1;
+      visibility: visible;
+    }
+    .lang-options a {
+      display: flex;
+      align-items: center;
+      padding: 5px 8px;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .lang-options a:hover {
+      background: #444;
+    }
+    .lang-options a img.flag {
+      width: 24px;
+      height: auto;
+      margin-right: 8px;
+      border-radius: 2px;
+    }
+    /* Правая секция: меню навигации */
+    .navbar .menu {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+    .navbar .menu a {
+      margin-left: 10px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: background 0.3s;
+      color: #fff;
+    }
+    .navbar .menu a:hover {
+      background-color: #1b1f24;
+    }
+    .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+   filter: blur(5px) brightness(50%);
+
+  height: 100%;
+  background: url('background2.jpg') no-repeat center center/cover;
+  /* filter: blur(5px) brightness(50%); */
+  z-index: -1;
+  /* animation: backgroundAnimation 10s infinite linear; */
+  transition: transform 0.1s ease-out;
+}
+    </style>
+      <script>
+  let timeout;
+  let autoMove = false;
+  let currentX = 0, currentY = 0;
+  let targetX = 0, targetY = 0;
+  const scale = 1.1; // уменьшили масштаб для менее сильного приближения
+  const speed = 0.05; // Коэффициент плавности движения
+
+  // Функция для расчёта максимальных смещений по X и Y
+  function updateBounds(background) {
+    const maxX = (background.offsetWidth * scale - window.innerWidth) / 2;
+    const maxY = (background.offsetHeight * scale - window.innerHeight) / 2;
+    return { maxX, maxY };
+  }
+
+  // Функция для ограничения значения в заданном диапазоне
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    const background = document.querySelector('.background');
+    if (!background) return;
+
+    const { maxX, maxY } = updateBounds(background);
+
+    // Расчёт смещения с эффектом параллакса:
+    // Когда курсор слева — фон смещается вправо (и наоборот)
+    const newX = -maxX * ((e.clientX / window.innerWidth) - 0.5) * 2;
+    const newY = -maxY * ((e.clientY / window.innerHeight) - 0.5) * 2;
+
+    // Обновляем текущие и целевые позиции
+    currentX = clamp(newX, -maxX, maxX);
+    currentY = clamp(newY, -maxY, maxY);
+    targetX = currentX;
+    targetY = currentY;
+
+    background.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+
+    // Если мышь двигается, отменяем авто-анимацию
+    autoMove = false;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      autoMove = true;
+      setRandomTarget(background);
+      animateBackground(background);
+    }, 500);
+  });
+
+  // Устанавливаем случайную целевую позицию в пределах допустимых границ
+  function setRandomTarget(background) {
+    const { maxX, maxY } = updateBounds(background);
+    targetX = clamp(currentX + (Math.random() - 0.5) * 100, -maxX, maxX);
+    targetY = clamp(currentY + (Math.random() - 0.5) * 100, -maxY, maxY);
+  }
+
+  // Анимация плавного перехода к целевой точке
+  function animateBackground(background) {
+    if (!autoMove) return;
+    const { maxX, maxY } = updateBounds(background);
+
+    currentX += (targetX - currentX) * speed;
+    currentY += (targetY - currentY) * speed;
+
+    // Ограничиваем смещение, чтобы фон не выходил за границы
+    currentX = clamp(currentX, -maxX, maxX);
+    currentY = clamp(currentY, -maxY, maxY);
+
+    background.style.transform = `translate(${currentX}px, ${currentY}px) scale(${scale})`;
+
+    // Если почти достигли цели – выбираем новую случайную позицию
+    if (Math.abs(currentX - targetX) < 1 && Math.abs(currentY - targetY) < 1) {
+      setRandomTarget(background);
+    }
+
+    requestAnimationFrame(() => animateBackground(background));
+  }
+
+</script>
+<head>
+    <meta charset="UTF-8">
+
+    <title>Vrime</title>
+
+</head>
+<body>
+    <div class="background"></div>
+    <div class="navbar">
+        <!-- Левая секция: логотип и выбор языка -->
+        <div class="left-section">
+            <div class="title" onclick="window.location.href='index.html'">Vrime</div>
+            <div class="language-selector">
+                <button class="lang-btn" id="lang-btn">
+                    <img src="ru.png" alt="RU" class="flag" id="current-flag">
+                    <span id="current-lang-text">Русский</span>
+                </button>
+                <div class="lang-options">
+                    <a href="?lang=ru" data-lang="ru" data-text="Русский" data-flag="ru.png" onclick="changeLanguage(event)">
+                        <img src="ru.png" alt="RU" class="flag">
+                        Русский
+                    </a>
+                    <a href="?lang=uk" data-lang="uk" data-text="Українська" data-flag="uk.png" onclick="changeLanguage(event)">
+                        <img src="uk.png" alt="UA" class="flag">
+                        Українська
+                    </a>
+                    <a href="?lang=en" data-lang="en" data-text="English" data-flag="en.png" onclick="changeLanguage(event)">
+                        <img src="en.png" alt="EN" class="flag">
+                        English
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая секция: меню навигации -->
+        <div class="menu">
+            <a href="buy.html"><i class="fa-solid fa-bag-shopping mr-2"> </i> <span data-i18n="buy">  Buy</span></a>
+  <a href="dashboard.html"><i class="fa-solid fa-user"></i> <span data-i18n="account">Account</span></a>
+  <a href="index.html#features"><i class="fa-solid fa-building"></i> <span data-i18n="about">About</span></a>
+
+  <a href="support.html"><i class="fa-solid fa-headset"></i> <span class="no-translate"></span> <span data-i18n="support">Поддержка</span></a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="switch-buttons">
+            <div class="button-container">
+    <button id="login-btn" class="active" onclick="switchForm('login')">
+        <i class="fa fa-sign-in-alt"></i> Вход
+    </button>
+    <button id="register-btn" onclick="switchForm('register')">
+        <i class="fa fa-user-plus"></i> Регистрация
+    </button>
+</div>
+
+        </div>
+        <div id="form-title" class="form-title">Войдите</div>
+        <!-- Выводим сообщение об ошибке, если оно есть -->
+        
+            <div class="error-message">
+                
+            </div>
+        
+
+
+        <form id="login-form" class="form-container active" action="" method="POST">
+    <p class="small-text">Введите логин и пароль от аккаунта.</p>
+    <input type="text" name="username" placeholder="Логин" required>
+
+    <input type="password" name="password" placeholder="Пароль" required>
+
+    <!-- Добавляем чекбокс "Не выходить из системы" -->
+    <div class="checkbox-container">
+        <input type="checkbox" id="remember_me" name="remember_me">
+        <label for="eula"> Оставаться в системе 30 дней </label>
+
+    </div>
+
+    <button class="button" type="submit" name="action" value="login">
+        <i class="fa fa-sign-in-alt"></i> Войти
+    </button>
+</form>
+
+
+        </form>
+
+        <form id="register-form" class="form-container" action="" method="POST">
+            <p class="small-text">Придумайте логин и пароль для аккаунта. Рекомендуем использовать сложный пароль.</p>
+            <input type="text" name="username" placeholder="Логин" required>
+            <input type="password" name="password" placeholder="Пароль" required>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="eula" name="eula" required>
+                <label for="eula"> Я согласен с правилами <a href="eula.pdf" target="_blank">EULA</a> и <a href="offer.pdf" target="_blank">Офферта.</a></label>
+            </div>
+
+            <button class="button" type="submit" name="action" value="register">
+    <i class="fa fa-user-plus"></i> Зарегистрироваться
+</button>
+
+        </form>
+
+    </div>
+
+<script>
+// Find the language selector element
+const langSelector = document.querySelector('.language-selector');
+let closeTimeout;
+
+// Open the menu when mouse enters
+langSelector.addEventListener('mouseenter', () => {
+    clearTimeout(closeTimeout);
+    langSelector.classList.add('open');
+});
+
+// Close the menu after 1.5 seconds when mouse leaves
+langSelector.addEventListener('mouseleave', () => {
+    closeTimeout = setTimeout(() => {
+        langSelector.classList.remove('open');
+    }, 200);
+});
+
+// Handlers for changing the language
+document.querySelectorAll(".lang-options a").forEach(link => {
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const lang = e.target.closest("a").getAttribute("data-lang");
+        setLanguage(lang);  // Immediately apply the language
+    });
+});
+
+// Translations
+const translations = {
+    'ru': {
+        'buy': 'Купить',
+        'account': 'Аккаунт',
+        'about': 'О нас',
+        'support': 'Поддержка',
+        'login': 'Войти',
+        'register': 'Зарегистрироваться',
+        'form-title': 'Войдите',
+        'username-placeholder': 'Логин',
+        'password-placeholder': 'Пароль'
+    },
+    'uk': {
+        'buy': 'Купити',
+
+        'account': 'Аккаунт',
+        'about': 'Про нас',
+        'support': 'Підтримка',
+        'login': 'Вхід',
+        'register': 'Реєстрація',
+        'form-title': 'Увійти',
+        'username-placeholder': 'Логін',
+        'password-placeholder': 'Пароль'
+    },
+    'en': {
+        'buy': 'Buy',
+        'account': 'Account',
+        'about': 'About',
+        'support': 'Support',
+        'login': 'Login',
+        'register': 'Register',
+        'form-title': 'Login',
+        'username-placeholder': 'Username',
+        'password-placeholder': 'Password'
+    }
+};
+
+// Language change function
+function setLanguage(lang) {
+    localStorage.setItem("language", lang); // Save language in localStorage
+
+    // Change the flag and text
+    const flag = lang === 'ru' ? 'ru.png' : lang === 'en' ? 'uk.png' : 'en.png';
+    const langText = lang === 'ru' ? "Русский" : lang === 'en' ? "English" : "Українська";
+    document.querySelector("#current-flag").src = flag;
+    document.querySelector("#current-lang-text").textContent = langText;
+
+    // Apply translations
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = translations[lang][key];
+        if (el.placeholder) {
+            el.placeholder = translations[lang][key + '-placeholder'] || el.placeholder;
+        }
+    });
+}
+
+// Get selected language from localStorage and apply it
+const storedLanguage = localStorage.getItem("language") || "ru";
+setLanguage(storedLanguage);
+</script>
+
+
+
+
+
+
+
+    <script>
+        function switchForm(form) {
+    document.getElementById('login-form').classList.remove('active');
+    document.getElementById('register-form').classList.remove('active');
+    document.getElementById('login-btn').classList.remove('active');
+    document.getElementById('register-btn').classList.remove('active');
+
+    let formTitle = document.getElementById('form-title');
+    let formSubtitle = document.getElementById('form-subtitle');
+
+    if (form === 'login') {
+        document.getElementById('login-form').classList.add('active');
+        document.getElementById('login-btn').classList.add('active');
+
+        formTitle.textContent = "Войдите";
+
+    } else {
+        document.getElementById('register-form').classList.add('active');
+        document.getElementById('register-btn').classList.add('active');
+        formTitle.textContent = "Зарегистрируйтесь";
+
+    }
+}
+
+
+
+
+        fetch('https://api64.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.querySelectorAll('input[name="ip_address"]').forEach(input => input.value = data.ip);
+            });
+    </script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('#login-form, #register-form').forEach((form) => {
+      form.setAttribute('action', '#');
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const username = form.querySelector('input[name="username"]')?.value?.trim() || 'DemoUser';
+        localStorage.setItem('vrime_demo_user', username);
+        window.location.href = 'dashboard.html';
+      });
+    });
+  });
+</script>
+</body>
+</html>
